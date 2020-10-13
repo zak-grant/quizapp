@@ -9,23 +9,14 @@ using QuizApp.Models;
 
 namespace QuizApp.Services
 {
-    class QuestionService : IQuestionService
+    public class QuestionService : IQuestionService
     {
-        //private readonly ILogger<QuestionService> _logger;
-
-        //public QuestionService(ILogger<QuestionService> logger)
-        //{
-        //    _logger = logger;
-        //}
-
         /// <summary>
         /// Get list of questions back from text file
         /// </summary>
         /// <returns>List<Question></returns>
         public List<Question> BuildQuestions()
         {
-
-
             // Get back data first
             var data = GetQuestionData();
 
@@ -49,20 +40,14 @@ namespace QuizApp.Services
             try
             {
                 // Need the file name where the questions are stored
-                string fileName = @"questions.txt";
+                string fileName = @"../../../../questions.txt";
 
                 // Get data from file
                 data = GetData(fileName);
-
-                // Log that we got data
-                //_logger.LogInformation($"Retrieved Data Successfully at: {DateTime.UtcNow}");
             }
             // If not able to get data back
             catch (Exception e)
             {
-                //Log.LogError($"Unable to retrieve data at: {DateTime.UtcNow}");
-                //_logger.LogError(e.StackTrace);
-
                 // Record stack trace for future debugging
                 Console.WriteLine("Unable to retireve data. Please restart applciation.");
             }
@@ -76,7 +61,7 @@ namespace QuizApp.Services
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns>List<strings></returns>
-        private List<string> GetData(string fileName)
+        public List<string> GetData(string fileName)
         {
             // Read all lines from the text document
             return File.ReadLines(fileName).ToList();
@@ -106,10 +91,17 @@ namespace QuizApp.Services
 
                     // Fill in question field
                     tempQuestion.question = questionData[i];
+
+                    int questionNumber;
+
+                    // Parse answer number from question and store in answer
+                    bool isNumber = Int32.TryParse(tempQuestion.question[1].ToString(), out questionNumber);
+
+                    // Get question number
+                    tempQuestion.QuestionNumber = questionNumber;
                 }
-                // Check if next line is the beginning of a new question
                 else if (questionData[i + 1].StartsWith('('))
-                {
+                { 
                     // Create temp variable for out of parsed int
                     int answer;
 
@@ -127,7 +119,6 @@ namespace QuizApp.Services
                     }
                 }
                 else
-                // Else this must be one of the possible answers to the question
                 {
                     // Check if tempQuestion.ANswers is null
                     if (tempQuestion.answers == null)
@@ -148,7 +139,6 @@ namespace QuizApp.Services
 
                     // Add answer to possible list of answers for question
                     tempQuestion.answers.Add(questionAnswer);
-
                 }
             }
 

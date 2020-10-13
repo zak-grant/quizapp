@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuizApp.Models
 {
-    class Question
+    public class Question
     {
         // The question to be asked
         public string question { get; set; }
@@ -20,5 +20,8 @@ namespace QuizApp.Models
 
         // Store if the answer was correct or not
         public bool IsCorrect;
+
+        // Question number
+        public int QuestionNumber { get; set; }
     }
 }

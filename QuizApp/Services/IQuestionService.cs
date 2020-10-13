@@ -6,7 +6,7 @@ using System.Text;
 
 namespace QuizApp.Services
 {
-    interface IQuestionService
+    public interface IQuestionService
     {
         List<string> GetQuestionData();
 

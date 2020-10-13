@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace QuizApp
 {
-    class QuizOperation
+    public class QuizOperation
     {
         private readonly IQuestionService _questionService;
-        //private readonly ILogger<QuizOperation> _logger;
 
         int quizScore;
 
@@ -20,27 +19,25 @@ namespace QuizApp
         {
         }
 
-        public QuizOperation(IQuestionService questionService/*, ILogger<QuizOperation> logger*/)
+        public QuizOperation(IQuestionService questionService)
         {
             _questionService = questionService;
-            //_logger = logger;
         }
 
         public List<Question> BuildQuizQuestions()
         {
             IQuestionService questionService = new QuestionService();
-            return questionService.BuildQuestions();
+            return questionService.BuildQuestions().OrderBy(x => x.QuestionNumber).ToList();
         }
 
         public void RunQuiz(List<Question> questions)
         {
             if (questions == null)
             {
-                //_logger.log($"There was a problem with the quiz questions: {questions}");
                 Console.WriteLine("There was a problem with the quiz questions.");
             }
 
-            foreach (var question in questions)
+            foreach (var question in questions)                                                                                                                                                            
             {
                 // Display the question
                 QuizMessageOutputs.DisplayQuestion(question);
@@ -62,7 +59,7 @@ namespace QuizApp
         /// Incriment quiz score if user got question correct
         /// </summary>
         /// <param name="question"></param>
-        private void AdjustScore(Question question)
+        public void AdjustScore(Question question)
         {
             // Check if question is null
             if (question == null)
@@ -81,7 +78,7 @@ namespace QuizApp
         /// Check if the users answer is correct
         /// </summary>
         /// <param name="answer"></param>
-        private void CheckIfAnswerCorrect(int answer, Question question)
+        public void CheckIfAnswerCorrect(int answer, Question question)
         {
             // Get the correct answer from the list of answers
             var correctAnswer = question.answers.First(x => x.Id == question.correctAnswer);
@@ -116,6 +113,7 @@ namespace QuizApp
         {
             // Get the users answer
             var usersAnswer = Console.ReadLine();
+
             // Get a list of all possible answers in the question
             List<int> allPossibleAnswers = GetAllPossibleAnswers(question.answers);
 

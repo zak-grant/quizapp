@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Factories\" />
+    <Compile Remove="GetData.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,13 +15,11 @@ namespace QuizApp
             var services = new ServiceCollection();
             ConfigureServices(services);
         }
-
         public void ConfigureServices(ServiceCollection services)
         {
             services.AddTransient<IQuestionService, QuestionService>();
             services.BuildServiceProvider(true);
             services.AddLogging(configure => configure.AddConsole());
         }
-
     }
 }

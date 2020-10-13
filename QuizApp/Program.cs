@@ -19,8 +19,6 @@ namespace QuizApp
 
             QuizOperation quiz = new QuizOperation();
 
-            QuestionService questionService = new QuestionService();
-
             var quizQuestions = quiz.BuildQuizQuestions();
             quiz.RunQuiz(quizQuestions);
         }
