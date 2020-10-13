@@ -12,9 +12,12 @@ namespace QuizApp
     {
         public void InitialProjectSetup()
         {
+            // Configure Services
             var services = new ServiceCollection();
             ConfigureServices(services);
         }
+
+        // Attempt at adding in logging
         public void ConfigureServices(ServiceCollection services)
         {
             services.AddTransient<IQuestionService, QuestionService>();

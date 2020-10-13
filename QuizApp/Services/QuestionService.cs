@@ -52,7 +52,6 @@ namespace QuizApp.Services
                 Console.WriteLine("Unable to retireve data. Please restart applciation.");
             }
 
-            // Return data as list of strings
             return data;
         }
 
@@ -77,11 +76,9 @@ namespace QuizApp.Services
             // Create question model for storing data in
             Question tempQuestion = new Question();
 
-            // Create list of questions to eventually return
             List<Question> questions = new List<Question>();
 
-            // For loop to go through each line of data returned from text file of questions
-            for (int i = 0; i < questionData.Count - 1; i++)
+            for (int i = 0; i < questionData.Count; i++)
             {
                 // Check if is first line of question
                 if (questionData[i].StartsWith('('))
@@ -100,15 +97,13 @@ namespace QuizApp.Services
                     // Get question number
                     tempQuestion.QuestionNumber = questionNumber;
                 }
-                else if (questionData[i + 1].StartsWith('('))
+                else if ((i == questionData.Count - 1) || questionData[i + 1].StartsWith('('))
                 { 
-                    // Create temp variable for out of parsed int
                     int answer;
 
                     // Parse answer number from question and store in answer
                     bool isNumber = Int32.TryParse(questionData[i], out answer);
 
-                    // If parse was successful
                     if (isNumber)
                     {
                         // Assign correct answer to correctAnswer property in tempQuestion
@@ -120,7 +115,6 @@ namespace QuizApp.Services
                 }
                 else
                 {
-                    // Check if tempQuestion.ANswers is null
                     if (tempQuestion.answers == null)
                     {
                         // If null, create a new list of strings
